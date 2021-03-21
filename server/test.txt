@@ -1,0 +1,26 @@
+[
+  {
+    "firstName": "Indrashi",
+    "lastName": "Nath",
+    "contact": "111111",
+    "birthday": "2021-05-11T22:00:00.000Z",
+    "address": "Heidesheimer Straße",
+    "id": 4
+  },
+  {
+    "firstName": "Indrashis",
+    "lastName": "Nath",
+    "contact": "jeet",
+    "birthday": "2021-03-25T23:00:00.000Z",
+    "address": "Heidesheimer Straße",
+    "id": 7
+  },
+  {
+    "firstName": "Indra",
+    "lastName": "Nath",
+    "contact": "99999999999999",
+    "birthday": "2021-04-13T22:00:00.000Z",
+    "address": "Heidesheimer Straße",
+    "id": 8
+  }
+]
