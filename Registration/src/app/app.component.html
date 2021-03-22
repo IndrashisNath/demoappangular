@@ -1,10 +1,11 @@
-<mat-card class="example-card mat-elevation-z8">
+<mat-card class="register-card mat-elevation-z8">
   <mat-card-header>
     <mat-card-title>Content Management System</mat-card-title>
     <mat-card-subtitle>Registration</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <form class="my-form" [formGroup]="registerForm" *ngIf="!submitted">
+    <!-- Form for registration -->
+    <form class="register-form" [formGroup]="registerForm" *ngIf="!submitted">
       <mat-form-field class="full-width">
         <mat-label>First Name</mat-label>
         <input
@@ -73,27 +74,15 @@
       <button mat-raised-button color="accent" (click)="reset()">Reset</button>
     </form>
   </mat-card-content>
-  <!-- <mat-card-actions>
-    <button mat-raised-button (click)="onSubmit()">Register</button>
-    <button mat-raised-button>Cancel</button>
-  </mat-card-actions> -->
 </mat-card>
 
-<mat-card class="example-card mat-elevation-z8">
+<mat-card class="register-card mat-elevation-z8">
+  <!-- Search field -->
   <mat-form-field class="full-width">
     <mat-label>Search</mat-label>
     <input matInput [(ngModel)]="search" placeholder="Search an item" />
   </mat-form-field>
   <button mat-raised-button color="primary" (click)="onSearch()">Search</button>
-
-  <!-- <mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let item of searchData">
-      FirstName: {{ item.firstName }} LastName: {{ item.lastName }} Contact:
-      {{ item.contact }} Birthday:
-      {{ item.birthday | date: "fullDate" }} Address:
-      {{ item.address }}
-    </mat-list-item>
-  </mat-list> -->
 
   <mat-selection-list #selections [multiple]="false">
     <mat-list-option
@@ -105,7 +94,8 @@
     </mat-list-option>
   </mat-selection-list>
 
-  <form class="my-form" [formGroup]="updateForm" *ngIf="isSelected">
+  <!-- Form for updating and deleting -->
+  <form class="register-form" [formGroup]="updateForm" *ngIf="isSelected">
     <mat-form-field class="full-width">
       <mat-label>First Name</mat-label>
       <input
@@ -170,54 +160,39 @@
       Delete
     </button>
   </form>
-  <!-- <p>Option selected: {{ selections.selectedOptions.selected[0]?.value }}</p> -->
 </mat-card>
 
+<!-- Table for displaying entries -->
 <div class="mat-elevation-z8">
-  <mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Ex. ium"
-      #input
-    />
-  </mat-form-field>
-
-  <table mat-table [dataSource]="dataSource" matSort>
+  <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="firstName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>FirstName</th>
+      <th mat-header-cell *matHeaderCellDef>FirstName</th>
       <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="lastName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>LastName</th>
+      <th mat-header-cell *matHeaderCellDef>LastName</th>
       <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="contact">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact</th>
+      <th mat-header-cell *matHeaderCellDef>Contact</th>
       <td mat-cell *matCellDef="let element">{{ element.contact }}</td>
     </ng-container>
 
     <ng-container matColumnDef="birthday">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Birthday</th>
+      <th mat-header-cell *matHeaderCellDef>Birthday</th>
       <td mat-cell *matCellDef="let element">
         {{ element.birthday | date: "fullDate" }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="address">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Address</th>
+      <th mat-header-cell *matHeaderCellDef>Address</th>
       <td mat-cell *matCellDef="let element">{{ element.address }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-  ></mat-paginator>
 </div>

@@ -13,25 +13,25 @@ app.get('/', function(req, res) {
 	res.send('Hello from server');
 });
 
+/* If file exists, read the file and send the value in response */
 app.get('/fetch', function(req, res) {
   if (fs.existsSync('test.txt')) {
     fs.readFile('test.txt', 'utf8', (err, jsonString) => {
       if (err) {
-          console.log("File read failed:", err)
-          return
+        console.log("File read failed:", err);
       }
-      //console.log('File data:', jsonString)
       res.send(jsonString);
     });
   }
 });
 
+/* search operation */
 app.post('/search', function(req, res) {
-  var str = req.body.searchq.toLowerCase();
-  var arr = [];
-  var fileCont =fs.readFileSync('test.txt');
+  let str = req.body.searchq.toLowerCase();
+  let arr = [];
+  let fileCont = fs.readFileSync('test.txt');
   arr = JSON.parse(fileCont);
-  var result = arr.filter(obj => {
+  let result = arr.filter(obj => {
     if (obj["firstName"].toLowerCase().includes(str) || obj["lastName"].toLowerCase().includes(str))
       return obj;
     else
@@ -43,28 +43,27 @@ app.post('/search', function(req, res) {
     res.status(200).send({"message": "No value match"});  
 });
 
+/* check for redundancy and register */
 app.post('/register', function(req, res) {
-  var reqObj = req.body;
-  //console.log(req.body);
-  var arr = [];
-  var newId = 1;
-  var result = false;
+  let reqObj = req.body;
+  let arr = [];
+  let newId = 1;
+  let result = false;
 
   if (fs.existsSync('test.txt')) {
-    var fileCont =fs.readFileSync('test.txt');
+    let fileCont = fs.readFileSync('test.txt');
     arr = JSON.parse(fileCont);
     result = arr.some(obj => {
-      return (obj["firstName"]===reqObj["firstName"] &&
-      obj["lastName"]===reqObj["lastName"]
+      return (obj["firstName"] === reqObj["firstName"] &&
+      obj["lastName"] === reqObj["lastName"]
       );
     });
   }
   if(result)
-  //console.log('contact already exists');
     alert("Contact already exists!");
   else {
-    if (arr.length > 0){
-      arr.sort((a,b)=>a.id - b.id);
+    if (arr.length > 0) {
+      arr.sort((a,b) => a.id - b.id);
       newId = arr[arr.length - 1].id + 1;
     }
     arr.push(req.body);
@@ -79,16 +78,15 @@ app.post('/register', function(req, res) {
   res.status(200).send({"message": "Data received"});
 });
 
+/* delete operation */
 app.post('/delete', function(req, res) {
-  var reqId = req.body.id;
-  console.log(req.body);
-  console.log(reqId);
-  var fileCont =fs.readFileSync('test.txt');
+  let reqId = req.body.id;
+  let arr = [];
+  let fileCont = fs.readFileSync('test.txt');
   arr = JSON.parse(fileCont);
   arr = arr.filter(obj => {
-    return (obj["id"]!==reqId)
+    return (obj["id"] !== reqId)
   });
-  console.log(arr);
   fs.writeFile("test.txt", JSON.stringify(arr, null, 2), function(err) {
     console.log('File successfully written to disk');
     if (err) {
@@ -99,13 +97,14 @@ app.post('/delete', function(req, res) {
   res.status(200).send({"message": "Item was deleted"});
 });
 
+/* update operation */
 app.post('/update', function(req, res) {
-  var reqObjId = req.body.id;
-  console.log(req.body);
-  var fileCont =fs.readFileSync('test.txt');
+  let reqObjId = req.body.id;
+  let arr = [];
+  let fileCont = fs.readFileSync('test.txt');
   arr = JSON.parse(fileCont);
   arr = arr.filter(obj => {
-    return (obj["id"]!==reqObjId)
+    return (obj["id"] !== reqObjId)
   });
   arr.push(req.body);
 
